@@ -1,4 +1,6 @@
 class MarverService {
+  _apiBase = 'https://gateway.marvel.com:443/v1/public/';
+  _apiKey = 'apikey=4246451221b77ae47492166344c89484';
 
   getResource = async (url) => {
     let res = await fetch(url);
@@ -11,7 +13,11 @@ class MarverService {
   }
 
   getAllCharacters = () => {
-    return this.getResource('https://gateway.marvel.com:443/v1/public/characters?apikey=4246451221b77ae47492166344c89484');
+    return this.getResource(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
+  }
+
+  getCharacter = (id) => {
+    return this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`);
   }
 
 }
