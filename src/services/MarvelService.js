@@ -12,12 +12,26 @@ class MarverService {
     return await res.json();
   }
 
-  getAllCharacters = () => {
-    return this.getResource(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
+  getAllCharacters = async () => {
+    const chars = await this.getResource(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
+    const charArr = chars.data.results.map((item) => this._transformChar(item));
+    return charArr;
   }
 
-  getCharacter = (id) => {
-    return this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`);
+  getCharacter = async (id) => {
+    const res = await this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`);
+    const char = res.data.results[0];
+    return this._transformChar(char);
+  }
+
+  _transformChar = (dataObj) => {
+      return {
+        name: dataObj.name,
+        description: dataObj.description,
+        thumbnail: dataObj.thumbnail.path + '.' + dataObj.thumbnail.extension,
+        homepage: dataObj.urls[0].url,
+        wiki: dataObj.urls[1].url
+      }
   }
 
 }
