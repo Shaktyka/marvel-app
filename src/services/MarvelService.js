@@ -1,7 +1,7 @@
 class MarverService {
   _apiBase = 'https://gateway.marvel.com:443/v1/public/';
   _apiKey = 'apikey=4246451221b77ae47492166344c89484';
-  _descriptionMaxLength = 230;
+  _descriptionMaxLength = 220;
 
   getResource = async (url) => {
     let res = await fetch(url);
